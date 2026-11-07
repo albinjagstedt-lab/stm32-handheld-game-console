@@ -180,10 +180,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pins : button_left_Pin button_right_Pin button_A_Pin button_B_Pin
-                           button_Start_Pin */
-  GPIO_InitStruct.Pin = button_left_Pin|button_right_Pin|button_A_Pin|button_B_Pin
-                          |button_Start_Pin;
+  /*Configure GPIO pins : button_left_Pin button_right_Pin button_a_Pin button_b_Pin
+                           button_start_Pin */
+  GPIO_InitStruct.Pin = button_left_Pin|button_right_Pin|button_a_Pin|button_b_Pin
+                          |button_start_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
