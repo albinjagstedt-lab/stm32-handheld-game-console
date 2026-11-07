@@ -198,6 +198,24 @@ void SysTick_Handler(void)
 /* please refer to the startup file (startup_stm32g4xx.s).                    */
 /******************************************************************************/
 
+/**
+  * @brief This function handles EXTI line[9:5] interrupts.
+  */
+void EXTI9_5_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
+
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(button_left_Pin);
+  HAL_GPIO_EXTI_IRQHandler(button_right_Pin);
+  HAL_GPIO_EXTI_IRQHandler(button_A_Pin);
+  HAL_GPIO_EXTI_IRQHandler(button_B_Pin);
+  HAL_GPIO_EXTI_IRQHandler(button_Start_Pin);
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
+
+  /* USER CODE END EXTI9_5_IRQn 1 */
+}
+
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
