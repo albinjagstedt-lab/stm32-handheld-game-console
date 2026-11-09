@@ -1,0 +1,6 @@
+../Core/Src/snake_game.c:22:6:queue_push_front	16	static
+../Core/Src/snake_game.c:26:6:queue_pop_back	4	static
+../Core/Src/snake_game.c:30:17:queue_get_front	16	static
+../Core/Src/snake_game.c:39:6:snake_init	4	static
+../Core/Src/snake_game.c:43:6:snake_move	16	static
+../Core/Src/snake_game.c:47:6:snake_grow	16	static

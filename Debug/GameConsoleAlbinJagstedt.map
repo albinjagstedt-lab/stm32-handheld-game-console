@@ -183,10 +183,24 @@ Discarded input sections
  .text          0x00000000        0x0 ./Core/Src/snake_game.o
  .data          0x00000000        0x0 ./Core/Src/snake_game.o
  .bss           0x00000000        0x0 ./Core/Src/snake_game.o
- .debug_info    0x00000000       0x77 ./Core/Src/snake_game.o
- .debug_abbrev  0x00000000       0x28 ./Core/Src/snake_game.o
- .debug_aranges
+ .text.queue_push_front
                 0x00000000       0x18 ./Core/Src/snake_game.o
+ .text.queue_pop_back
+                0x00000000        0xe ./Core/Src/snake_game.o
+ .text.queue_get_front
+                0x00000000       0x16 ./Core/Src/snake_game.o
+ .text.snake_init
+                0x00000000        0xe ./Core/Src/snake_game.o
+ .text.snake_move
+                0x00000000       0x16 ./Core/Src/snake_game.o
+ .text.snake_grow
+                0x00000000       0x16 ./Core/Src/snake_game.o
+ .debug_info    0x00000000      0x167 ./Core/Src/snake_game.o
+ .debug_abbrev  0x00000000       0xe8 ./Core/Src/snake_game.o
+ .debug_aranges
+                0x00000000       0x48 ./Core/Src/snake_game.o
+ .debug_rnglists
+                0x00000000       0x31 ./Core/Src/snake_game.o
  .debug_macro   0x00000000      0x2c2 ./Core/Src/snake_game.o
  .debug_macro   0x00000000      0xade ./Core/Src/snake_game.o
  .debug_macro   0x00000000      0x155 ./Core/Src/snake_game.o
@@ -247,9 +261,10 @@ Discarded input sections
  .debug_macro   0x00000000       0x16 ./Core/Src/snake_game.o
  .debug_macro   0x00000000      0x146 ./Core/Src/snake_game.o
  .debug_macro   0x00000000       0x28 ./Core/Src/snake_game.o
- .debug_line    0x00000000      0x8d4 ./Core/Src/snake_game.o
- .debug_str     0x00000000    0xb35e7 ./Core/Src/snake_game.o
+ .debug_line    0x00000000      0x94c ./Core/Src/snake_game.o
+ .debug_str     0x00000000    0xb3662 ./Core/Src/snake_game.o
  .comment       0x00000000       0x44 ./Core/Src/snake_game.o
+ .debug_frame   0x00000000       0xd8 ./Core/Src/snake_game.o
  .ARM.attributes
                 0x00000000       0x34 ./Core/Src/snake_game.o
  .group         0x00000000        0xc ./Core/Src/stm32g4xx_hal_msp.o
