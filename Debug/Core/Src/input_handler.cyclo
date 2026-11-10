@@ -1,2 +1,2 @@
-../Core/Src/input_handler.c:21:6:debounced_button_press	10
-../Core/Src/input_handler.c:45:6:HAL_GPIO_EXTI_Callback	6
+../Core/Src/input_handler.c:15:6:button_press	2
+../Core/Src/input_handler.c:25:6:HAL_GPIO_EXTI_Callback	9

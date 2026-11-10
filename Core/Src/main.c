@@ -184,7 +184,7 @@ static void MX_GPIO_Init(void)
                            button_start_Pin */
   GPIO_InitStruct.Pin = button_left_Pin|button_right_Pin|button_a_Pin|button_b_Pin
                           |button_start_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 

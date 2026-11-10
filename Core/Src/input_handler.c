@@ -7,44 +7,37 @@
 
 #include "main.h"
 
-#define button_debounce_time 150
+#define DEBOUNCE_TIME 30
 
-uint32_t last_tick_causing_exti = 0;
-uint32_t last_tick_causing_debounce = 0;
+uint32_t debounce_ticks[5];
+int button_presses[5];
 
-int bl_press = 0;
-int br_press = 0;
-int ba_press = 0;
-int bb_press = 0;
-int bs_press = 0;
+void button_press(int button_index){
+	uint32_t now = HAL_GetTick();
 
-void debounced_button_press(uint16_t pin){
-	if(last_tick_causing_exti >= (last_tick_causing_debounce + button_debounce_time)){
-		last_tick_causing_debounce = last_tick_causing_exti;
+		if(now < (debounce_ticks[button_index] + DEBOUNCE_TIME))
+			return;
 
-		switch(pin){
-			case button_left_Pin:
-				bl_press++;
-			break;
-			case button_right_Pin:
-				br_press++;
-			break;
-			case button_a_Pin:
-				ba_press++;
-			break;
-			case button_b_Pin:
-				bb_press++;
-			break;
-			case button_start_Pin:
-				bs_press++;
-			break;
-		}
-	}
+	debounce_ticks[button_index] = now;
+	button_presses[button_index]++;
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t pin){
-	if(pin == button_left_Pin || pin == button_right_Pin || pin == button_a_Pin || pin == button_b_Pin || pin == button_start_Pin){
-		last_tick_causing_exti = HAL_GetTick();
-		debounced_button_press(pin);
+	switch(pin){
+		case button_left_Pin:
+			button_press(0);
+		break;
+		case button_right_Pin:
+			button_press(1);
+		break;
+		case button_a_Pin:
+			button_press(2);
+		break;
+		case button_b_Pin:
+			button_press(3);
+		break;
+		case button_start_Pin:
+			button_press(4);
+		break;
 	}
 }
