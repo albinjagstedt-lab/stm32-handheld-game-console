@@ -43,6 +43,8 @@
 
 COM_InitTypeDef BspCOMInit;
 
+TIM_HandleTypeDef htim6;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -50,6 +52,7 @@ COM_InitTypeDef BspCOMInit;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -57,6 +60,63 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+/* INPUT HANDLING -------------------------------------------------*/
+
+#define DEBOUNCE_TIME 20
+#define NUM_BUTTONS 5
+
+//Button 0 - Button Left
+//Button 1 - Button Right
+//Button 2 - Button A
+//Button 3 - Button B
+//Button 4 - Button Start
+
+uint32_t button_debounce_ticks[NUM_BUTTONS];
+uint8_t button_state_changed[NUM_BUTTONS];
+uint8_t is_holding_button[NUM_BUTTONS];
+uint16_t button_pins[NUM_BUTTONS] = {button_left_Pin, button_right_Pin, button_a_Pin, button_b_Pin, button_start_Pin};
+
+int button_presses[NUM_BUTTONS];
+
+void button_update(int button_index, uint16_t pin){
+	uint32_t now = HAL_GetTick();
+
+	is_holding_button[button_index] = (HAL_GPIO_ReadPin(GPIOA, pin) == GPIO_PIN_RESET);
+
+	if(!button_state_changed[button_index] || now < (button_debounce_ticks[button_index] + DEBOUNCE_TIME))
+		return;
+
+	button_state_changed[button_index] = 0;
+	button_debounce_ticks[button_index] = now;
+	button_presses[button_index]++;
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim != &htim6)
+		return;
+	for(int i = 0; i < NUM_BUTTONS; ++i)
+		button_update(i, button_pins[i]);
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t pin){
+	switch(pin){
+		case button_left_Pin:
+			button_state_changed[0] = 1;
+		break;
+		case button_right_Pin:
+			button_state_changed[1] = 1;
+		break;
+		case button_a_Pin:
+			button_state_changed[2] = 1;
+		break;
+		case button_b_Pin:
+			button_state_changed[3] = 1;
+		break;
+		case button_start_Pin:
+			button_state_changed[4] = 1;
+		break;
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -88,6 +148,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -108,6 +169,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  HAL_TIM_Base_Start_IT(&htim6);
+
   while (1)
   {
 
@@ -165,6 +229,44 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 999;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 1699;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -184,7 +286,7 @@ static void MX_GPIO_Init(void)
                            button_start_Pin */
   GPIO_InitStruct.Pin = button_left_Pin|button_right_Pin|button_a_Pin|button_b_Pin
                           |button_start_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
