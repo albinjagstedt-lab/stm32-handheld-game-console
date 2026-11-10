@@ -81,14 +81,16 @@ int button_presses[NUM_BUTTONS];
 void button_update(int button_index, uint16_t pin){
 	uint32_t now = HAL_GetTick();
 
+	uint8_t was_button_held = is_holding_button[button_index];
 	is_holding_button[button_index] = (HAL_GPIO_ReadPin(GPIOA, pin) == GPIO_PIN_RESET);
 
-	if(!button_state_changed[button_index] || now < (button_debounce_ticks[button_index] + DEBOUNCE_TIME))
-		return;
-
-	button_state_changed[button_index] = 0;
-	button_debounce_ticks[button_index] = now;
-	button_presses[button_index]++;
+	if(!was_button_held && is_holding_button[button_index] &&
+		button_state_changed[button_index] && now > (button_debounce_ticks[button_index] + DEBOUNCE_TIME))
+	{
+		button_state_changed[button_index] = 0;
+		button_debounce_ticks[button_index] = now;
+		button_presses[button_index]++;
+	}
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
