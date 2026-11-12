@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00006020  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00013a15  00000000  00000000  00006050  2**0
+ 12 .debug_info   000142e0  00000000  00000000  00006050  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 0000262c  00000000  00000000  00019a65  2**0
+ 13 .debug_abbrev 0000284e  00000000  00000000  0001a330  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000011d0  00000000  00000000  0001c098  2**3
+ 14 .debug_aranges 000011e8  00000000  00000000  0001cb80  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00000df7  00000000  00000000  0001d268  2**0
+ 15 .debug_rnglists 00000e04  00000000  00000000  0001dd68  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001ed3f  00000000  00000000  0001e05f  2**0
+ 16 .debug_macro  0001f02a  00000000  00000000  0001eb6c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00014514  00000000  00000000  0003cd9e  2**0
+ 17 .debug_line   00014e4a  00000000  00000000  0003db96  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000c8525  00000000  00000000  000512b2  2**0
+ 18 .debug_str    000c8541  00000000  00000000  000529e0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001197d7  2**0
+ 19 .comment      00000043  00000000  00000000  0011af21  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004818  00000000  00000000  0011981c  2**2
+ 20 .debug_frame  00004828  00000000  00000000  0011af64  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000078  00000000  00000000  0011e034  2**0
+ 21 .debug_line_str 00000078  00000000  00000000  0011f78c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -462,10 +462,10 @@ void button_update(int button_index, uint16_t pin){
  80005da:	3710      	adds	r7, #16
  80005dc:	46bd      	mov	sp, r7
  80005de:	bd80      	pop	{r7, pc}
- 80005e0:	20000178 	.word	0x20000178
- 80005e4:	20000170 	.word	0x20000170
- 80005e8:	2000015c 	.word	0x2000015c
- 80005ec:	20000180 	.word	0x20000180
+ 80005e0:	20000058 	.word	0x20000058
+ 80005e4:	20000050 	.word	0x20000050
+ 80005e8:	2000003c 	.word	0x2000003c
+ 80005ec:	20000060 	.word	0x20000060
 
 080005f0 <HAL_TIM_PeriodElapsedCallback>:
 
@@ -505,7 +505,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  8000626:	3710      	adds	r7, #16
  8000628:	46bd      	mov	sp, r7
  800062a:	bd80      	pop	{r7, pc}
- 800062c:	20000110 	.word	0x20000110
+ 800062c:	20000148 	.word	0x20000148
  8000630:	20000000 	.word	0x20000000
 
 08000634 <HAL_GPIO_EXTI_Callback>:
@@ -578,7 +578,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin){
  8000698:	f85d 7b04 	ldr.w	r7, [sp], #4
  800069c:	4770      	bx	lr
  800069e:	bf00      	nop
- 80006a0:	20000170 	.word	0x20000170
+ 80006a0:	20000050 	.word	0x20000050
 
 080006a4 <main>:
 /**
@@ -719,8 +719,8 @@ int main(void)
  800075a:	bf00      	nop
  800075c:	e7fd      	b.n	800075a <main+0xb6>
  800075e:	bf00      	nop
- 8000760:	20000110 	.word	0x20000110
- 8000764:	2000003c 	.word	0x2000003c
+ 8000760:	20000148 	.word	0x20000148
+ 8000764:	20000074 	.word	0x20000074
 
 08000768 <SystemClock_Config>:
 /**
@@ -924,7 +924,7 @@ static void MX_SPI1_Init(void)
  800086e:	bf00      	nop
  8000870:	bd80      	pop	{r7, pc}
  8000872:	bf00      	nop
- 8000874:	2000004c 	.word	0x2000004c
+ 8000874:	20000084 	.word	0x20000084
  8000878:	40013000 	.word	0x40013000
 
 0800087c <MX_TIM6_Init>:
@@ -1010,7 +1010,7 @@ static void MX_TIM6_Init(void)
  80008de:	46bd      	mov	sp, r7
  80008e0:	bd80      	pop	{r7, pc}
  80008e2:	bf00      	nop
- 80008e4:	20000110 	.word	0x20000110
+ 80008e4:	20000148 	.word	0x20000148
  80008e8:	40001000 	.word	0x40001000
 
 080008ec <MX_DMA_Init>:
@@ -1270,7 +1270,7 @@ static void ST7735_write_command(uint8_t cmd) {
  8000a60:	bd80      	pop	{r7, pc}
  8000a62:	bf00      	nop
  8000a64:	48000400 	.word	0x48000400
- 8000a68:	2000004c 	.word	0x2000004c
+ 8000a68:	20000084 	.word	0x20000084
 
 08000a6c <ST7735_write_data>:
 
@@ -1308,7 +1308,7 @@ static void ST7735_write_data(uint8_t *buff, size_t buff_size) {
  8000aa8:	46bd      	mov	sp, r7
  8000aaa:	bd80      	pop	{r7, pc}
  8000aac:	48000400 	.word	0x48000400
- 8000ab0:	2000004c 	.word	0x2000004c
+ 8000ab0:	20000084 	.word	0x20000084
 
 08000ab4 <ST7735_set_address_window>:
 
@@ -1650,7 +1650,7 @@ void ST7735_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t c
  8000cf8:	46bd      	mov	sp, r7
  8000cfa:	bd90      	pop	{r4, r7, pc}
  8000cfc:	48000400 	.word	0x48000400
- 8000d00:	2000004c 	.word	0x2000004c
+ 8000d00:	20000084 	.word	0x20000084
 
 08000d04 <ST7735_fill_screen>:
 
@@ -1878,7 +1878,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
  8000e3c:	40013000 	.word	0x40013000
  8000e40:	40021000 	.word	0x40021000
  8000e44:	48000400 	.word	0x48000400
- 8000e48:	200000b0 	.word	0x200000b0
+ 8000e48:	200000e8 	.word	0x200000e8
  8000e4c:	4002001c 	.word	0x4002001c
 
 08000e50 <HAL_TIM_Base_MspInit>:
@@ -2122,7 +2122,7 @@ void DMA1_Channel2_IRQHandler(void)
  8000f06:	bf00      	nop
  8000f08:	bd80      	pop	{r7, pc}
  8000f0a:	bf00      	nop
- 8000f0c:	200000b0 	.word	0x200000b0
+ 8000f0c:	200000e8 	.word	0x200000e8
 
 08000f10 <EXTI9_5_IRQHandler>:
 
@@ -2181,7 +2181,7 @@ void TIM6_DAC_IRQHandler(void)
  8000f46:	bf00      	nop
  8000f48:	bd80      	pop	{r7, pc}
  8000f4a:	bf00      	nop
- 8000f4c:	20000110 	.word	0x20000110
+ 8000f4c:	20000148 	.word	0x20000148
 
 08000f50 <SystemInit>:
   * @param  None
