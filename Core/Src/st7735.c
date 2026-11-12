@@ -7,12 +7,12 @@
 
 #include "st7735.h"
 
-extern SPI_HandleTypeDef hspi2;
+extern SPI_HandleTypeDef hspi1;
 
-#define X_OFFSET 0
-#define Y_OFFSET 0
+#define X_OFFSET 2
+#define Y_OFFSET 1
 
-static void ST7735_reset() {
+static void ST7735_reset(void) {
     HAL_GPIO_WritePin(LCD_RES_GPIO_Port, LCD_RES_Pin, GPIO_PIN_RESET);
     HAL_Delay(10);
     HAL_GPIO_WritePin(LCD_RES_GPIO_Port, LCD_RES_Pin, GPIO_PIN_SET);
@@ -22,14 +22,14 @@ static void ST7735_reset() {
 static void ST7735_write_command(uint8_t cmd) {
     HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, GPIO_PIN_RESET); // Command mode
     HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_RESET); // Select display
-    HAL_SPI_Transmit(&hspi2, &cmd, 1, HAL_MAX_DELAY);
+    HAL_SPI_Transmit(&hspi1, &cmd, 1, HAL_MAX_DELAY);
     HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);   // Deselect display
 }
 
 static void ST7735_write_data(uint8_t *buff, size_t buff_size) {
     HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, GPIO_PIN_SET);   // Data mode
     HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_RESET); // Select display
-    HAL_SPI_Transmit(&hspi2, buff, buff_size, HAL_MAX_DELAY);
+    HAL_SPI_Transmit(&hspi1, buff, buff_size, HAL_MAX_DELAY);
     HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);   // Deselect display
 }
 
@@ -61,7 +61,7 @@ static void ST7735_set_address_window(uint16_t x0, uint16_t y0, uint16_t x1, uin
     ST7735_write_command(0x2C);
 }
 
-void ST7735_init() {
+void ST7735_init(void) {
     ST7735_reset();
 
     ST7735_write_command(0x01); // SWRESET: Software reset
@@ -126,7 +126,7 @@ void ST7735_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t c
 
     while (total_bytes > 0) {
         uint16_t send_len = (total_bytes > sizeof(chunk)) ? sizeof(chunk) : total_bytes;
-        HAL_SPI_Transmit(&hspi2, chunk, send_len, HAL_MAX_DELAY);
+        HAL_SPI_Transmit(&hspi1, chunk, send_len, HAL_MAX_DELAY);
         total_bytes -= send_len;
     }
 
