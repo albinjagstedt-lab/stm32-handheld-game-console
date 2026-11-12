@@ -163,10 +163,18 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   ST7735_init();
-  ST7735_fill_screen(ST7735_BLACK);
-  ST7735_fill_rect(20, 30, 88, 60, ST7735_RED);
-  ST7735_draw_pixel(64, 80, ST7735_WHITE);
   HAL_TIM_Base_Start_IT(&htim6);
+
+
+  uint16_t x0 = 0;
+  uint16_t y0 = 40;
+  uint16_t w  = 128;
+  uint16_t h  = 80;
+
+  ST7735_fill_screen(ST7735_BLACK);
+  ST7735_fill_rect(x0, y0, w, h, 0x0354);
+  ST7735_fill_rect(x0 + 40, y0, 16, h, 0xFE60);
+  ST7735_fill_rect(x0, y0 + 32, w, 16, 0xFE60);
 
   /* USER CODE END 2 */
 
