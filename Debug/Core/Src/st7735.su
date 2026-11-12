@@ -1,1 +1,8 @@
-../Core/Src/st7735.c:11:6:ST7735_write_data	16	static
+../Core/Src/st7735.c:15:13:ST7735_reset	8	static
+../Core/Src/st7735.c:22:13:ST7735_write_command	16	static
+../Core/Src/st7735.c:29:13:ST7735_write_data	16	static
+../Core/Src/st7735.c:36:13:ST7735_set_address_window	32	static
+../Core/Src/st7735.c:64:6:ST7735_init	16	static
+../Core/Src/st7735.c:95:6:ST7735_draw_pixel	24	static
+../Core/Src/st7735.c:106:6:ST7735_fill_rect	168	static
+../Core/Src/st7735.c:136:6:ST7735_fill_screen	24	static
