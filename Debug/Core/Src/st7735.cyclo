@@ -6,4 +6,7 @@
 ../Core/Src/st7735.c:95:6:ST7735_draw_pixel	3
 ../Core/Src/st7735.c:107:6:ST7735_fill_rect	7
 ../Core/Src/st7735.c:140:6:ST7735_fill_screen	1
-../Core/Src/st7735.c:144:6:ST7735_draw_sprite	6
+../Core/Src/st7735.c:144:6:sprite_overwrite	2
+../Core/Src/st7735.c:149:6:rotate_sprite	4
+../Core/Src/st7735.c:166:6:mirror_sprite	3
+../Core/Src/st7735.c:176:6:ST7735_draw_sprite	8

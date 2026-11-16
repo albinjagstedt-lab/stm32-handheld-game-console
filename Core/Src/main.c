@@ -109,18 +109,21 @@ int main(void)
 
 
   ST7735_fill_screen(ST7735_BLACK);
-  const uint16_t player_sprite[8 * 8] =
+  uint16_t apple_sprite[8 * 8] =
   {
-      RED,RED,RED,RED,RED,RED,RED,RED,
-      RED,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,RED,
-      RED,WHITE,BLUE,BLUE,BLUE,BLUE,WHITE,RED,
-      RED,WHITE,BLUE,YELLOW,YELLOW,BLUE,WHITE,RED,
-      RED,WHITE,BLUE,YELLOW,YELLOW,BLUE,WHITE,RED,
-      RED,WHITE,BLUE,BLUE,BLUE,BLUE,WHITE,RED,
-      RED,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,RED,
-      RED,RED,RED,RED,RED,RED,RED,RED
+      0x0000, 0x43E0, 0x6000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+      0x0000, 0x0000, 0xF800, 0x6000, 0xFBEF, 0xFBEF, 0x0000, 0x0000,
+      0x0000, 0xF800, 0xF800, 0xB000, 0xF800, 0xF800, 0xFBEF, 0x0000,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xFBEF,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
+      0x9000, 0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xB000,
+      0x0000, 0x9000, 0xB000, 0xB000, 0xB000, 0xB000, 0x0000, 0x0000
   };
-  ST7735_draw_sprite(60, 60, 8, 8, player_sprite, WHITE);
+  ST7735_draw_sprite(52, 60, 8, 8, apple_sprite, 0, 0);
+  ST7735_draw_sprite(60, 60, 8, 8, apple_sprite, 1, 0);
+  ST7735_draw_sprite(68, 60, 8, 8, apple_sprite, 2, 1);
+  ST7735_draw_sprite(48, 68, 8, 8, apple_sprite, 3, 3);
 
   /* USER CODE END 2 */
 

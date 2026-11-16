@@ -8,7 +8,10 @@
 #ifndef INC_COLORS_H_
 #define INC_COLORS_H_
 
-#define BLACK   0x0000
+// Colors in RGB 565
+
+#define TRANSPARENT 0x0000
+#define BLACK   0x0821
 #define BLUE    0x001F
 #define RED     0xF800
 #define GREEN   0x07E0
