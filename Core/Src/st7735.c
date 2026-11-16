@@ -93,7 +93,8 @@ void ST7735_init(void) {
 }
 
 void ST7735_draw_pixel(uint16_t x, uint16_t y, uint16_t color) {
-    if (x >= ST7735_WIDTH || y >= ST7735_HEIGHT) return;
+    if (x >= ST7735_WIDTH || y >= ST7735_HEIGHT)
+    	return;
 
     ST7735_set_address_window(x, y, x, y);
 
@@ -104,9 +105,12 @@ void ST7735_draw_pixel(uint16_t x, uint16_t y, uint16_t color) {
 }
 
 void ST7735_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color) {
-    if (x >= ST7735_WIDTH || y >= ST7735_HEIGHT) return;
-    if ((x + w - 1) >= ST7735_WIDTH)  w = ST7735_WIDTH - x;
-    if ((y + h - 1) >= ST7735_HEIGHT) h = ST7735_HEIGHT - y;
+    if (x >= ST7735_WIDTH || y >= ST7735_HEIGHT)
+    	return;
+    if ((x + w - 1) >= ST7735_WIDTH)
+    	w = ST7735_WIDTH - x;
+    if ((y + h - 1) >= ST7735_HEIGHT)
+    	h = ST7735_HEIGHT - y;
 
     ST7735_set_address_window(x, y, x + w - 1, y + h - 1);
 
@@ -135,4 +139,31 @@ void ST7735_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t c
 
 void ST7735_fill_screen(uint16_t color) {
     ST7735_fill_rect(0, 0, ST7735_WIDTH, ST7735_HEIGHT, color);
+}
+
+void ST7735_draw_sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t *sprite, uint16_t transparency_color){
+    if ((x >= ST7735_WIDTH) || (y >= ST7735_HEIGHT))
+        return;
+
+    if ((x + width) > ST7735_WIDTH)
+        width = ST7735_WIDTH - x;
+
+    if ((y + height) > ST7735_HEIGHT)
+        height = ST7735_HEIGHT - y;
+
+    ST7735_set_address_window(x, y, x + width - 1, y + height - 1);
+
+    HAL_GPIO_WritePin(LCD_DC_GPIO_Port, LCD_DC_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_RESET);
+
+    for (uint32_t i = 0; i < (uint32_t)width * height; i++){
+        uint8_t pixel[2];
+
+        pixel[0] = sprite[i] >> 8;
+        pixel[1] = sprite[i] & 0xFF;
+
+        HAL_SPI_Transmit(&hspi1, pixel, 2, HAL_MAX_DELAY);
+    }
+
+    HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
 }

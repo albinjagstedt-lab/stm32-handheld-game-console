@@ -31,5 +31,6 @@ void ST7735_init(void);
 void ST7735_draw_pixel(uint16_t x, uint16_t y, uint16_t color);
 void ST7735_fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t color);
 void ST7735_fill_screen(uint16_t color);
+void ST7735_draw_sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t *sprite, uint16_t transparency_color);
 
 #endif /* INC_ST7735_H_ */

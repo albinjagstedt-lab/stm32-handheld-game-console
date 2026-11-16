@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "st7735.h"
+#include "colors.h"
 
 /* USER CODE END Includes */
 
@@ -107,15 +108,19 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim6);
 
 
-  uint16_t x0 = 0;
-  uint16_t y0 = 40;
-  uint16_t w  = 128;
-  uint16_t h  = 80;
-
   ST7735_fill_screen(ST7735_BLACK);
-  ST7735_fill_rect(x0, y0, w, h, 0x0354);
-  ST7735_fill_rect(x0 + 40, y0, 16, h, 0xFE60);
-  ST7735_fill_rect(x0, y0 + 32, w, 16, 0xFE60);
+  const uint16_t player_sprite[8 * 8] =
+  {
+      RED,RED,RED,RED,RED,RED,RED,RED,
+      RED,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,RED,
+      RED,WHITE,BLUE,BLUE,BLUE,BLUE,WHITE,RED,
+      RED,WHITE,BLUE,YELLOW,YELLOW,BLUE,WHITE,RED,
+      RED,WHITE,BLUE,YELLOW,YELLOW,BLUE,WHITE,RED,
+      RED,WHITE,BLUE,BLUE,BLUE,BLUE,WHITE,RED,
+      RED,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,RED,
+      RED,RED,RED,RED,RED,RED,RED,RED
+  };
+  ST7735_draw_sprite(60, 60, 8, 8, player_sprite, WHITE);
 
   /* USER CODE END 2 */
 
