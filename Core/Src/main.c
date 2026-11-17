@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "st7735.h"
+#include "colors.h"
 
 /* USER CODE END Includes */
 
@@ -107,15 +108,22 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim6);
 
 
-  uint16_t x0 = 0;
-  uint16_t y0 = 40;
-  uint16_t w  = 128;
-  uint16_t h  = 80;
-
-  ST7735_fill_screen(ST7735_BLACK);
-  ST7735_fill_rect(x0, y0, w, h, 0x0354);
-  ST7735_fill_rect(x0 + 40, y0, 16, h, 0xFE60);
-  ST7735_fill_rect(x0, y0 + 32, w, 16, 0xFE60);
+  ST7735_fill_screen(WHITE);
+  uint16_t apple_sprite[8 * 8] =
+  {
+      0x0000, 0x43E0, 0x6000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+      0x0000, 0x0000, 0xF800, 0x6000, 0xFBEF, 0xFBEF, 0x0000, 0x0000,
+      0x0000, 0xF800, 0xF800, 0xB000, 0xF800, 0xF800, 0xFBEF, 0x0000,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xFBEF,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
+      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
+      0x9000, 0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xB000,
+      0x0000, 0x9000, 0xB000, 0xB000, 0xB000, 0xB000, 0x0000, 0x0000
+  };
+  ST7735_draw_sprite(52, 60, 8, 8, apple_sprite, 0, 0);
+  ST7735_draw_sprite(60, 60, 8, 8, apple_sprite, 1, 0);
+  ST7735_draw_sprite(68, 60, 8, 8, apple_sprite, 2, 1);
+  ST7735_draw_sprite_transparent(48, 68, 8, 8, apple_sprite, 3, 3);
 
   /* USER CODE END 2 */
 
