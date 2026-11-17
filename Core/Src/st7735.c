@@ -6,6 +6,7 @@
  */
 
 #include "st7735.h"
+#include "colors.h"
 
 extern SPI_HandleTypeDef hspi1;
 
@@ -173,14 +174,18 @@ void mirror_sprite(uint16_t width, uint16_t height, uint16_t *sprite){
 	sprite_overwrite(sprite, new_sprite, width * height);
 }
 
-void ST7735_draw_sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t *sprite, uint8_t rotation, uint8_t mirrored){
+void ST7735_draw_sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t *sprite, uint8_t rotation, uint8_t mirrored){
     if ((x >= ST7735_WIDTH) || (y >= ST7735_HEIGHT))
         return;
 
+    uint16_t temp_sprite[width * height];
+	for(int i = 0; i < width * height; i++)
+		temp_sprite[i] = sprite[i];
+
     if(mirrored % 2 > 0)
-        mirror_sprite(width, height, sprite);
+        mirror_sprite(width, height, temp_sprite);
     if(rotation > 0)
-    	rotate_sprite(&width, &height, sprite, rotation);
+    	rotate_sprite(&width, &height, temp_sprite, rotation);
 
     if ((x + width) > ST7735_WIDTH)
         width = ST7735_WIDTH - x;
@@ -195,11 +200,41 @@ void ST7735_draw_sprite(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
     for (uint32_t i = 0; i < (uint32_t)width * height; i++){
         uint8_t pixel[2];
 
-        pixel[0] = sprite[i] >> 8;
-        pixel[1] = sprite[i] & 0xFF;
+        pixel[0] = temp_sprite[i] >> 8;
+        pixel[1] = temp_sprite[i] & 0xFF;
 
         HAL_SPI_Transmit(&hspi1, pixel, 2, HAL_MAX_DELAY);
     }
 
     HAL_GPIO_WritePin(LCD_CS_GPIO_Port, LCD_CS_Pin, GPIO_PIN_SET);
+}
+
+void ST7735_draw_sprite_transparent(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t *sprite, uint8_t rotation, uint8_t mirrored){
+    if ((x >= ST7735_WIDTH) || (y >= ST7735_HEIGHT))
+        return;
+
+    uint16_t temp_sprite[width * height];
+
+    for(uint32_t i = 0; i < (uint32_t)width * height; i++)
+        temp_sprite[i] = sprite[i];
+
+    if(mirrored % 2)
+        mirror_sprite(width, height, temp_sprite);
+
+    if(rotation > 0)
+        rotate_sprite(&width, &height, temp_sprite, rotation);
+
+    for(uint16_t py = 0; py < height; py++){
+        for(uint16_t px = 0; px < width; px++){
+            uint16_t color = temp_sprite[py * width + px];
+
+            if(color == TRANSPARENT)
+                continue;
+
+            if(x + px >= ST7735_WIDTH || y + py >= ST7735_HEIGHT)
+                continue;
+
+            ST7735_draw_pixel(x + px, y + py, color);
+        }
+    }
 }
