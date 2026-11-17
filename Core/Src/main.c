@@ -24,6 +24,8 @@
 
 #include "st7735.h"
 #include "colors.h"
+#include "input_handler.h"
+#include "snake_game.h"
 
 /* USER CODE END Includes */
 
@@ -50,6 +52,7 @@ SPI_HandleTypeDef hspi1;
 DMA_HandleTypeDef hdma_spi1_tx;
 
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN PV */
 
@@ -61,12 +64,20 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim == &htim7)
+		snake_game_timer_callback();
+	if(htim == &htim6)
+		input_handler_timer_callback();
+}
 
 /* USER CODE END 0 */
 
@@ -102,28 +113,13 @@ int main(void)
   MX_DMA_Init();
   MX_TIM6_Init();
   MX_SPI1_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
   ST7735_init();
   HAL_TIM_Base_Start_IT(&htim6);
 
-
-  ST7735_fill_screen(WHITE);
-  uint16_t apple_sprite[8 * 8] =
-  {
-      0x0000, 0x43E0, 0x6000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-      0x0000, 0x0000, 0xF800, 0x6000, 0xFBEF, 0xFBEF, 0x0000, 0x0000,
-      0x0000, 0xF800, 0xF800, 0xB000, 0xF800, 0xF800, 0xFBEF, 0x0000,
-      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xFBEF,
-      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
-      0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800,
-      0x9000, 0xB000, 0xF800, 0xF800, 0xF800, 0xF800, 0xF800, 0xB000,
-      0x0000, 0x9000, 0xB000, 0xB000, 0xB000, 0xB000, 0x0000, 0x0000
-  };
-  ST7735_draw_sprite(52, 60, 8, 8, apple_sprite, 0, 0);
-  ST7735_draw_sprite(60, 60, 8, 8, apple_sprite, 1, 0);
-  ST7735_draw_sprite(68, 60, 8, 8, apple_sprite, 2, 1);
-  ST7735_draw_sprite_transparent(48, 68, 8, 8, apple_sprite, 3, 3);
+  snake_game_init();
 
   /* USER CODE END 2 */
 
@@ -275,6 +271,44 @@ static void MX_TIM6_Init(void)
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM7_Init(void)
+{
+
+  /* USER CODE BEGIN TIM7_Init 0 */
+
+  /* USER CODE END TIM7_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM7_Init 1 */
+
+  /* USER CODE END TIM7_Init 1 */
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 16999;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 624;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM7_Init 2 */
+
+  /* USER CODE END TIM7_Init 2 */
 
 }
 

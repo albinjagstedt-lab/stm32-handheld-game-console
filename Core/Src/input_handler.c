@@ -9,8 +9,6 @@
 
 #include "main.h"
 
-extern TIM_HandleTypeDef htim6;
-
 #define DEBOUNCE_TIME 20
 #define NUM_BUTTONS 5
 
@@ -42,9 +40,7 @@ void button_update(int button_index, uint16_t pin){
 	}
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-	if(htim != &htim6)
-		return;
+void input_handler_timer_callback(){
 	for(int i = 0; i < NUM_BUTTONS; ++i)
 		button_update(i, button_pins[i]);
 }

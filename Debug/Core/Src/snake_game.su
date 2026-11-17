@@ -1,0 +1,4 @@
+../Core/Src/snake_game.c:34:6:game_tick	4	static
+../Core/Src/snake_game.c:38:6:visual_tick	4	static
+../Core/Src/snake_game.c:43:6:snake_game_timer_callback	8	static
+../Core/Src/snake_game.c:52:6:snake_game_init	8	static
