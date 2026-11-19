@@ -13,6 +13,7 @@
  */
 
 #include "main.h"
+#include "Textures/snake_textures.h"
 
 extern TIM_HandleTypeDef htim7;
 
@@ -31,6 +32,8 @@ enum turn_dir{
 	back
 };
 
+
+
 void game_tick(){
 
 }
@@ -41,12 +44,13 @@ void visual_tick(){
 
 uint8_t counter = 0;
 void snake_game_timer_callback(){
-	if(counter > 8){
+	if(counter > 16){
 		counter = 0;
 		game_tick();
 	}
+	if(counter % 2 == 0)
+		visual_tick();
 	counter++;
-	visual_tick();
 }
 
 void snake_game_init(){

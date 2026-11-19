@@ -1,4 +1,4 @@
-../Core/Src/snake_game.c:34:6:game_tick	1
-../Core/Src/snake_game.c:38:6:visual_tick	1
-../Core/Src/snake_game.c:43:6:snake_game_timer_callback	2
-../Core/Src/snake_game.c:52:6:snake_game_init	1
+../Core/Src/snake_game.c:37:6:game_tick	1
+../Core/Src/snake_game.c:41:6:visual_tick	1
+../Core/Src/snake_game.c:46:6:snake_game_timer_callback	3
+../Core/Src/snake_game.c:56:6:snake_game_init	1

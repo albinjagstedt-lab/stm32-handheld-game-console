@@ -294,7 +294,7 @@ static void MX_TIM7_Init(void)
   htim7.Instance = TIM7;
   htim7.Init.Prescaler = 16999;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 624;
+  htim7.Init.Period = 311;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
@@ -348,10 +348,10 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LCD_RES_Pin|LCD_DC_Pin|LCD_CS_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : button_left_Pin button_right_Pin button_a_Pin button_b_Pin
-                           button_start_Pin */
-  GPIO_InitStruct.Pin = button_left_Pin|button_right_Pin|button_a_Pin|button_b_Pin
-                          |button_start_Pin;
+  /*Configure GPIO pins : button_right_Pin button_a_Pin button_b_Pin button_start_Pin
+                           button_left_Pin */
+  GPIO_InitStruct.Pin = button_right_Pin|button_a_Pin|button_b_Pin|button_start_Pin
+                          |button_left_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -366,6 +366,9 @@ static void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
