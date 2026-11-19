@@ -28,8 +28,7 @@ struct position{
 enum turn_dir{
 	forward,
 	left,
-	right,
-	back
+	right
 };
 
 enum snake_part{
@@ -43,25 +42,34 @@ enum snake_part{
 
 enum turn_dir snake_dir = forward;
 
-enum snake_part snake_queue[128];
-uint8_t queue_front_ix = 0;
-uint8_t queue_back_ix = 0;
+enum position snake_head;
+enum position snake_queue[MAP_SIZE_X * MAP_SIZE_Y];
+int queue_front_ix = 0;
+int queue_back_ix = 0;
 
-void queue_push_back(){
-
+void queue_push_front(enum position pos){
+	queue_front_ix = (queue_back_ix + 1) % (MAP_SIZE_X * MAP_SIZE_Y);
+	snake_queue[queue_front_ix] = pos;
 }
 
-enum snake_part queue_pop_back(){
-
+enum position queue_pop_back(){
+	enum position pos = snake_queue[queue_back_ix];
+	queue_back_ix = (queue_back_ix + 1) % (MAP_SIZE_X * MAP_SIZE_Y);
+	return pos;
 }
 
 void snake_eat_apple(){
-
+	queue_push_front()
 }
 
 void snake_move(){
 
 }
+
+void snake_init(){
+
+}
+
 
 void game_tick(){
 
@@ -89,19 +97,19 @@ void snake_game_init(){
 // CONTROLS ----------------------------------------------------------------------------------------------
 
 void snake_game_left_button_pressed(){
-
+	snake_dir = left;
 }
 
 void snake_game_right_button_pressed(){
-
+	snake_dir = right;
 }
 
 void snake_game_a_button_pressed(){
-
+	snake_dir = left;
 }
 
 void snake_game_b_button_pressed(){
-
+	snake_dir = right;
 }
 
 void snake_game_start_button_pressed(){
