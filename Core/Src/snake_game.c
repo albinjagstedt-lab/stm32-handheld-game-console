@@ -32,7 +32,36 @@ enum turn_dir{
 	back
 };
 
+enum snake_part{
+	head,
+	tail,
+	body_straight,
+	body_right,
+	body_left,
+	head_eat
+};
 
+enum turn_dir snake_dir = forward;
+
+enum snake_part snake_queue[128];
+uint8_t queue_front_ix = 0;
+uint8_t queue_back_ix = 0;
+
+void queue_push_back(){
+
+}
+
+enum snake_part queue_pop_back(){
+
+}
+
+void snake_eat_apple(){
+
+}
+
+void snake_move(){
+
+}
 
 void game_tick(){
 
@@ -55,5 +84,27 @@ void snake_game_timer_callback(){
 
 void snake_game_init(){
 	HAL_TIM_Base_Start_IT(&htim7);
+}
+
+// CONTROLS ----------------------------------------------------------------------------------------------
+
+void snake_game_left_button_pressed(){
+
+}
+
+void snake_game_right_button_pressed(){
+
+}
+
+void snake_game_a_button_pressed(){
+
+}
+
+void snake_game_b_button_pressed(){
+
+}
+
+void snake_game_start_button_pressed(){
+
 }
 

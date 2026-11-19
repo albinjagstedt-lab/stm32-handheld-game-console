@@ -79,6 +79,26 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		input_handler_timer_callback();
 }
 
+void button_press(int button_index){
+	switch(button_index){
+		case 0:
+			snake_game_left_button_pressed();
+			break;
+		case 1:
+			snake_game_right_button_pressed();
+			break;
+		case 2:
+			snake_game_a_button_pressed();
+			break;
+		case 3:
+			snake_game_b_button_pressed();
+			break;
+		case 4:
+			snake_game_start_button_pressed();
+			break;
+	}
+}
+
 /* USER CODE END 0 */
 
 /**

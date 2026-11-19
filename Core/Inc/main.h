@@ -57,6 +57,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+void button_press(int button_index);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
