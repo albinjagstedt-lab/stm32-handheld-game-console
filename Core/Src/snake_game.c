@@ -41,42 +41,58 @@ enum snake_part{
 };
 
 enum turn_dir snake_dir = forward;
+struct position move_dir;
 
-enum position snake_head;
-enum position snake_queue[MAP_SIZE_X * MAP_SIZE_Y];
+struct position snake_head;
+struct position snake_queue[MAP_SIZE_X * MAP_SIZE_Y];
 int queue_front_ix = 0;
 int queue_back_ix = 0;
 
-void queue_push_front(enum position pos){
+void queue_push_front(struct position pos){
 	queue_front_ix = (queue_back_ix + 1) % (MAP_SIZE_X * MAP_SIZE_Y);
 	snake_queue[queue_front_ix] = pos;
 }
 
-enum position queue_pop_back(){
-	enum position pos = snake_queue[queue_back_ix];
+struct position queue_pop_back(){
+	struct position pos = snake_queue[queue_back_ix];
 	queue_back_ix = (queue_back_ix + 1) % (MAP_SIZE_X * MAP_SIZE_Y);
 	return pos;
 }
 
+uint8_t check_collisions(){
+	//TODO
+}
+
+void snake_move_head(){
+	//TODO
+}
+
 void snake_eat_apple(){
-	queue_push_front()
+	queue_push_front(snake_head);
+	snake_move_head();
 }
 
 void snake_move(){
+	queue_push_front(snake_head);
+	queue_pop_back();
+	snake_move_head();
 
 }
 
 void snake_init(){
-
+	//TODO
 }
 
+// TIMED TICKS ----------------------------------------------------------------------------------------------
 
+// Every 16th tick - 2hz
 void game_tick(){
-
+	//TODO
 }
 
+// Every 2nd tick - 16hz
 void visual_tick(){
-
+	//TODO
 }
 
 uint8_t counter = 0;
@@ -113,6 +129,6 @@ void snake_game_b_button_pressed(){
 }
 
 void snake_game_start_button_pressed(){
-
+	//TODO
 }
 
